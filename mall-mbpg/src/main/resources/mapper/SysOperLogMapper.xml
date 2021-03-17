@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kangqing.mallmbpg.mapper.SysOperLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.kangqing.mallmbpg.pojo.SysOperLog">
+        <id column="id" property="id" />
+        <result column="oper_module" property="operModule" />
+        <result column="oper_type" property="operType" />
+        <result column="oper_desc" property="operDesc" />
+        <result column="user_id" property="userId" />
+        <result column="start_time" property="startTime" />
+        <result column="spend_time" property="spendTime" />
+        <result column="base_path" property="basePath" />
+        <result column="method_path" property="methodPath" />
+        <result column="uri" property="uri" />
+        <result column="url" property="url" />
+        <result column="ip" property="ip" />
+        <result column="method" property="method" />
+        <result column="parameter" property="parameter" />
+        <result column="result" property="result" />
+        <result column="exception_name" property="exceptionName" />
+        <result column="exception_msg" property="exceptionMsg" />
+        <result column="version" property="version" />
+        <result column="del_code" property="delCode" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, oper_module, oper_type, oper_desc, user_id, start_time, spend_time, base_path, method_path, uri, url, ip, method, parameter, result, exception_name, exception_msg, version, del_code, create_time, update_time
+    </sql>
+
+    <select id="pageList" resultType="com.kangqing.mallmbpg.dto.SysLogOutDTO">
+        select
+        t.id id,
+        t.oper_module operModule,
+        t.oper_type operType,
+        t.oper_desc operDesc,
+        t.user_id userId,
+        u.username username,
+        t.ip logIp,
+        t.parameter logParams,
+        t.method logMethod,
+        t.spend_time spendTime,
+        t.exception_name exceptionName,
+        t.exception_msg exceptionMsg,
+        t.create_time createTime
+        from sys_oper_log t
+        left join user u on u.id = t.user_id
+        where t.del_code = '0'
+        <if test="param.operModule!=null and param.operModule!='' ">
+            and t.oper_module = #{param.operModule}
+        </if>
+        <if test="param.operType!=null and param.operType!='' ">
+            and t.oper_type = #{param.operType}
+        </if>
+        <if test="param.operDesc!=null and param.operDesc!='' ">
+            and t.oper_desc = #{param.operDesc}
+        </if>
+        <if test="param.userId!=null and param.userId!='' ">
+            and t.user_id = #{param.userId}
+        </if>
+        order by t.create_time desc
+    </select>
+
+</mapper>

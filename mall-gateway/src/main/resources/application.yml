@@ -1,0 +1,66 @@
+server:
+  port: 7029
+spring:
+  profiles:
+    active: dev
+  application:
+    name: mall-gateway
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/mall?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&failOverReadOnly=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+    username: root
+    password: 5678
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    gateway:
+      routes: #配置路由规则
+        - id: api-shipping-route
+          uri: lb://mall-shipping #在结合注册中心使用过滤器的时候，需要注意的是uri的协议为lb，这样才能启用Gateway的负载均衡功能。
+          predicates:
+            - Path=/api/shipping/**
+          filters:
+            - StripPrefix=1
+        - id: api-order-route
+            uri: lb://mall-order
+            predicates:
+              - Path=/api/order/**
+            filters:
+              - StripPrefix=1
+        - id: api-oauth2-route
+          uri: lb://mall-auth2
+          predicates:
+            - Path=/auth/**
+          filters:
+            - StripPrefix=1
+      discovery:
+        locator:
+          enabled: true #开启从注册中心动态创建路由的功能
+          lower-case-service-id: true #使用小写服务名，默认是大写
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: 'http://127.0.0.1:7027/rsa/publicKey' #配置RSA的公钥访问地址
+  redis:
+    database: 0
+    port: 6379
+    host: 127.0.0.1
+    password:
+
+secure:
+  ignore:
+    urls: #配置白名单路径
+      - "/doc.html"
+      - "/swagger-resources/**"
+      - "/swagger/**"
+      - "/**/v2/api-docs"
+      - "/**/*.js"
+      - "/**/*.css"
+      - "/**/*.png"
+      - "/**/*.ico"
+      - "/webjars/springfox-swagger-ui/**"
+      - "/actuator/**"
+      - "/auth/oauth/token"
+      - "/auth/rsa/publicKey"
