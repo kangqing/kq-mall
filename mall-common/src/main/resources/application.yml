@@ -23,3 +23,9 @@ spring:
         max-idle: 8
         # 连接池中的最小空闲连接 默认 0
         min-idle: 0
+
+# 没有指定name和id等属性，然后由spring会自动生成name,类似“org.apache.dubbo.config.ApplicationConfig#0”，
+# 就报错了，名称中有非法字符。
+dubbo:
+  application:
+    name: mall-common

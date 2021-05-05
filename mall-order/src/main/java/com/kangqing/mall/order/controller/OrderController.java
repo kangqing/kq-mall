@@ -1,5 +1,7 @@
 package com.kangqing.mall.order.controller;
 
+import com.kangqing.mallmbpg.service.OrderService;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -10,4 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class OrderController {
 
+    private OrderService orderService;
+
+    @GetMapping("/getShipping")
+    public Object getShipping() {
+        return orderService.getShipping();
+    }
 }

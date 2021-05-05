@@ -77,31 +77,31 @@ public class JsonResult<T> implements Serializable {
     }
 
     public static <T> JsonResult<T> success(String msg){
-        return new JsonResult<T>(true, msg);
+        return new JsonResult<>(true, msg);
     }
 
     public static <T> JsonResult<T> success(T data){
-        return new JsonResult<T>(true, data);
+        return new JsonResult<>(true, data);
     }
 
     public static <T> JsonResult<T> success(String msg, T data){
-        return new JsonResult<T>(true, msg, data);
+        return new JsonResult<>(true, msg, data);
     }
 
     public static <T> JsonResult<T> fail(){
-        return new JsonResult<T>(false);
+        return new JsonResult<>(false);
     }
 
     public static <T> JsonResult<T> fail(String msg){
-        return new JsonResult<T>(false, msg);
+        return new JsonResult<>(false, msg);
     }
 
     public static <T> JsonResult<T> fail(String code, String msg){
-        return new JsonResult<T>(code, msg);
+        return new JsonResult<>(code, msg);
     }
 
     public static <T> JsonResult<T> fail(String code, String msg, T data){
-        return new JsonResult<T>(false, code, msg, data);
+        return new JsonResult<>(false, code, msg, data);
     }
 
     public static <T> JsonResult<T> noStatus(String code, String msg, T data){

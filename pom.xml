@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.2.RELEASE</version>
+        <version>2.3.9.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.kangqing</groupId>
@@ -19,6 +19,30 @@
         <apache.dubbo>2.7.8</apache.dubbo>
         <commons.lang3>3.7</commons.lang3>
     </properties>
+
+    <!-- 覆盖maven配置中的 -->
+    <!--<mirror>
+        <id>huaweicloud</id>
+        <name>huaweicloud maven</name>
+        <mirrorOf>*</mirrorOf>
+        <url>https://mirrors.huaweicloud.com/repository/maven/</url>
+    </mirror>-->
+    <!--<repositories>
+        <repository>
+            <id>central</id>
+            <name>huaweicloud</name>
+            <url>https://mirrors.huaweicloud.com/repository/maven/</url>
+            <layout>default</layout>
+            &lt;!&ndash; 是否开启发布版构件下载 &ndash;&gt;
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            &lt;!&ndash; 是否开启快照版构件下载 &ndash;&gt;
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>-->
     <modules>
         <module>mall-common</module>
         <module>mall-mbpg</module>

@@ -10,7 +10,7 @@ spring:
   profiles:
     active: dev
   application:
-    name: kq-auth2
+    name: mall-auth2
   cloud:
     nacos:
       discovery:

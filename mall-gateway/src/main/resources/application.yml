@@ -21,19 +21,19 @@ spring:
           predicates:
             - Path=/api/shipping/**
           filters:
-            - StripPrefix=1
+            - StripPrefix=2
         - id: api-order-route
-            uri: lb://mall-order
-            predicates:
-              - Path=/api/order/**
-            filters:
-              - StripPrefix=1
+          uri: lb://mall-order
+          predicates:
+            - Path=/api/order/**
+          filters:
+            - StripPrefix=2
         - id: api-oauth2-route
           uri: lb://mall-auth2
           predicates:
             - Path=/auth/**
           filters:
-            - StripPrefix=1
+            - StripPrefix=1 # 相当于访问7029/auth/oauth/token 时候去掉 1位前缀 也就是访问到 mall-auth2/oauth/token
       discovery:
         locator:
           enabled: true #开启从注册中心动态创建路由的功能
