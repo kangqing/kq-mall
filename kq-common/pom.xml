@@ -21,6 +21,7 @@
         <module>common-elasticsearch</module>
         <module>common-redis</module>
         <module>common-mybatis</module>
+        <module>common-rabbitmq</module>
     </modules>
 
 </project>
