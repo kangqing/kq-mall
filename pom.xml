@@ -49,6 +49,8 @@
         <module>mall-shipping</module>
         <module>mall-order</module>
         <module>kq-common</module>
+        <module>common-core</module>
+        <module>common-core</module>
     </modules>
 
     <dependencies>
