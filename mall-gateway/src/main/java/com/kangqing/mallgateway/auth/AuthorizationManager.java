@@ -9,6 +9,8 @@ import com.kangqing.mallgateway.constant.AuthConstant;
 import com.kangqing.mallgateway.domain.UserDto;
 import com.nimbusds.jose.JWSObject;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.authorization.AuthorizationDecision;
@@ -35,6 +37,7 @@ import java.util.stream.Collectors;
  * @since 2021/2/24 13:47
  */
 @Component
+@Slf4j
 @RequiredArgsConstructor
 public class AuthorizationManager implements ReactiveAuthorizationManager<AuthorizationContext> {
 
@@ -58,12 +61,13 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
         if(request.getMethod()== HttpMethod.OPTIONS){
             return Mono.just(new AuthorizationDecision(true));
         }
+        // token 为空拒绝访问
+        String token = request.getHeaders().getFirst(AuthConstant.JWT_TOKEN_HEADER);
+        if(StrUtil.isBlank(token)){
+            return Mono.just(new AuthorizationDecision(false));
+        }
         //不同用户体系登录不允许互相访问
         try {
-            String token = request.getHeaders().getFirst(AuthConstant.JWT_TOKEN_HEADER);
-            if(StrUtil.isEmpty(token)){
-                return Mono.just(new AuthorizationDecision(false));
-            }
             String realToken = token.replace(AuthConstant.JWT_TOKEN_PREFIX.toLowerCase(), "");
             JWSObject jwsObject = JWSObject.parse(realToken);
             String userStr = jwsObject.getPayload().toString();
@@ -94,15 +98,20 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
                 authorities.addAll(Convert.toList(String.class, resourceRolesMap.get(pattern)));
             }
         }
-        authorities = authorities.stream().map(i -> i = AuthConstant.AUTHORITY_PREFIX + i).collect(Collectors.toList());
-        //认证通过且角色匹配的用户可访问当前路径
-        return mono
+        Mono<AuthorizationDecision> authorizationDecisionMono = mono
                 .filter(Authentication::isAuthenticated)
                 .flatMapIterable(Authentication::getAuthorities)
                 .map(GrantedAuthority::getAuthority)
-                .any(authorities::contains)
+                .any(roleId -> {
+                    // 5. roleId是请求用户的角色(格式:ROLE_{roleId})，authorities是请求资源所需要角色的集合
+                    log.info("访问路径：{}", uri.getPath());
+                    log.info("用户角色roleId：{}", roleId);
+                    log.info("资源需要权限authorities：{}", authorities);
+                    return authorities.contains(roleId);
+                })
                 .map(AuthorizationDecision::new)
                 .defaultIfEmpty(new AuthorizationDecision(false));
+        return authorizationDecisionMono;
     }
 
     /* 之前自定义角色-权限对应关系 存在 redis 中的配置

@@ -1,13 +1,12 @@
 package com.kangqing.mallauth2.oauth2;
 
-import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.core.toolkit.ArrayUtils;
 import com.kangqing.mallauth2.jwt.JwtTokenEnhancer;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.config.annotation.builders.InMemoryClientDetailsServiceBuilder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -17,7 +16,9 @@ import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.rsa.crypto.KeyStoreKeyFactory;
 
+import java.security.KeyPair;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,10 +37,7 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenEnhancer jwtTokenEnhancer;
     private final OAuth2Properties oAuth2Properties;
-    private final TokenStore redisTokenStore;
-    private final JwtAccessTokenConverter jwtAccessTokenConverter;
 
-    /*
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
@@ -49,21 +47,21 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
                 .authorizedGrantTypes("password", "refresh_token")
                 .accessTokenValiditySeconds(3600)
                 .refreshTokenValiditySeconds(86400);
-    }*/
-    @Override
+    }
+    /*@Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 
         InMemoryClientDetailsServiceBuilder builder = clients.inMemory();
         if(ArrayUtils.isNotEmpty(oAuth2Properties.getClients())){
 
             for (OAuth2ClientProperties config : oAuth2Properties.getClients()) {
-                /**
+                *//**
                  * 按照逗号分隔放进数组
-                 */
+                 *//*
                 String[] authorizedGrantTypes = StrUtil.split(config.getAuthorizedGrantTypes(), ",");
                 String[] scopes = StrUtil.split(config.getScopes(), ",");
                 builder.withClient(config.getClientId())
-                        .secret(passwordEncoder.encode(config.getClientSecret()))
+                        .secret(config.getClientSecret())
                         .accessTokenValiditySeconds(config.getAccessTokenValiditySeconds()) //令牌的有效时间 我设置了两小时7200秒
                         .authorizedGrantTypes(authorizedGrantTypes) //针对这个应用支持的授权模式有哪些？
                         //接受一个数组，我写的支持刷新，授权码和密码模式 implicit简化模式没配置，所以不支持
@@ -73,37 +71,43 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
 
         }
 
-    }
+    }*/
 
     @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
-        /**
-         * 默认情况下自己适配
-         * 但是我们这里继承AuthorizationServerConfigurerAdapter 自定义之后，需要手动配置
-         */
-        /* 没配置 redis token 方案
-        endpoints
-                .tokenStore(redisTokenStore)
-                .authenticationManager(authenticationManager)
-                .userDetailsService(userDetailsService);*/
-
-        if (jwtAccessTokenConverter != null && jwtTokenEnhancer != null) {
-            TokenEnhancerChain enhancerChain = new TokenEnhancerChain();
-            List<TokenEnhancer> delegates = new ArrayList<>();
-            delegates.add(jwtTokenEnhancer);
-            delegates.add(jwtAccessTokenConverter);
-            enhancerChain.setTokenEnhancers(delegates); //配置JWT的内容增强器
-            endpoints.authenticationManager(authenticationManager)
-                    .userDetailsService(userDetailsService) //配置加载用户信息的服务
-                    .accessTokenConverter(jwtAccessTokenConverter)
-                    .tokenEnhancer(enhancerChain);
-        }
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+        TokenEnhancerChain enhancerChain = new TokenEnhancerChain();
+        List<TokenEnhancer> delegates = new ArrayList<>();
+        delegates.add(jwtTokenEnhancer);
+        delegates.add(accessTokenConverter());
+        enhancerChain.setTokenEnhancers(delegates); //配置JWT的内容增强器
+        endpoints.authenticationManager(authenticationManager)
+                .userDetailsService(userDetailsService) //配置加载用户信息的服务
+                .accessTokenConverter(accessTokenConverter())
+                .tokenEnhancer(enhancerChain);
     }
 
+    /**
+     * 让/oauth/token支持client_id以及client_secret作登录认证
+     * @param security
+     */
     @Override
-    public void configure(AuthorizationServerSecurityConfigurer security) {
+    public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
         security.allowFormAuthenticationForClients();
     }
 
+    @Bean
+    public JwtAccessTokenConverter accessTokenConverter() {
+        JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
+        jwtAccessTokenConverter.setKeyPair(keyPair());
+        return jwtAccessTokenConverter;
+    }
+
+    @Bean
+    public KeyPair keyPair() {
+        //从classpath下的证书中获取秘钥对
+        KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("jwt.jks"),
+                "123456".toCharArray());
+        return keyStoreKeyFactory.getKeyPair("jwt", "123456".toCharArray());
+    }
 
 }

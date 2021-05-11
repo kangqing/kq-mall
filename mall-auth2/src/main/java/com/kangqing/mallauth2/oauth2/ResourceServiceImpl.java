@@ -1,5 +1,6 @@
 package com.kangqing.mallauth2.oauth2;
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.kangqing.mallauth2.user.service.MenuResourceService;
 import com.kangqing.mallauth2.user.service.RoleResourceService;
@@ -41,24 +42,26 @@ public class ResourceServiceImpl {
 
     private final RoleResourceService roleResourceService;
 
-    /* 自定义的角色、权限对应键值对存储到redis中
+    //自定义的角色、权限对应键值对存储到redis中
     @PostConstruct
     public void initData() {
         Map<String, List<String>> resourceRolesMap = new TreeMap<>();
         resourceRolesMap.put("/api/hello", List.of("ADMIN"));
         resourceRolesMap.put("/api/user/currentUser", List.of("ADMIN", "TEST"));
-        redisTemplate.hSet(RESOURCE_ROLES_MAP, resourceRolesMap);
-    }*/
+        redisCacheTemplate.hSet(RESOURCE_ROLES_MAP, resourceRolesMap);
+    }
 
     /**
      * 项目启动时把 资源-角色对应关系写到 redis 中
      * @return
      */
-    @PostConstruct
+    /*@PostConstruct
     public Map<String,List<String>> initResourceRolesMap() {
         Map<String,List<String>> resourceRoleMap = new TreeMap<>();
+        // 资源表
         List<MenuResource> resourceList = menuResourceService.list(new QueryWrapper<>());
         List<Role> roleList = roleService.list(new QueryWrapper<>());
+        // 角色资源中间表
         List<RoleResource> relationList = roleResourceService.list(new QueryWrapper<>());
         for (MenuResource resource : resourceList) {
             Set<Long> roleIds = relationList.stream()
@@ -69,11 +72,13 @@ public class ResourceServiceImpl {
                     .filter(item -> roleIds.contains(item.getId()))
                     .map(item -> item.getId() + "_" + item.getName())
                     .collect(Collectors.toList());
-            resourceRoleMap.put("/" + applicationName + resource.getUrl(), roleNames);
+            // key = /mall-auth2/资源路径   value = 角色列表
+            if (StrUtil.isNotBlank(resource.getUrl()))
+                resourceRoleMap.put("/" + applicationName + resource.getUrl(), roleNames);
         }
         redisCacheTemplate.delete(RESOURCE_ROLES_MAP);
         redisCacheTemplate.hSet(RESOURCE_ROLES_MAP, resourceRoleMap);
         return resourceRoleMap;
 
-    }
+    }*/
 }

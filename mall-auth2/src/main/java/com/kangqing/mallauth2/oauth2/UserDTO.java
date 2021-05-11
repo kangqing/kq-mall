@@ -22,6 +22,6 @@ public class UserDTO{
     private Integer status;
     private List<String> roles;
 
-    private String clientId;
+    //private String clientId;
 
 }

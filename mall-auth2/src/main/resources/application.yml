@@ -28,6 +28,7 @@ management:
 # 自定义授权的应用
 kq:
   oauth2:
+    storeType: jwt
     clients[0]: # 第一个应用，要是有多个clients[1]、clients[2]等等
       clientId: kq-mall
       clientSecret: 123456
