@@ -1,0 +1,4 @@
+# spring只能扫描到启动类同级目录下的Bean,要想扫描到其他包，这是方法一，方法二是在启动类加@Import注解，引入要扫描的类
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.kangqing.common.mybatis.config.MybatisPlusConfig,\
+  com.kangqing.common.mybatis.handler.FieldFillHandler
