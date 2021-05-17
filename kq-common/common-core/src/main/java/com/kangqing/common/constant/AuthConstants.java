@@ -1,12 +1,12 @@
 package com.kangqing.common.constant;
 
 /**
- * 认证相关常量
+ * 自定义认证相关接口常量
  *
  * @author kangqing
- * @since 2021/5/12 13:05
+ * @since 2021/5/17 13:01
  */
-public class AuthConstants {
+public interface AuthConstants {
 
     /**
      * 认证请求头 key

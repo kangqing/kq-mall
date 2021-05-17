@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.kangqing.common.web.config.WebMvcConfig,\
+  com.kangqing.common.web.exception.GlobalExceptionHandler,\
+  com.kangqing.common.web.aspect.LoginLogAspect
