@@ -3,13 +3,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>kq-mall</artifactId>
+        <artifactId>kq-admin</artifactId>
         <groupId>com.kangqing</groupId>
         <version>0.0.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>kq-auth</artifactId>
+    <artifactId>admin-boot</artifactId>
 
     <properties>
         <kq.mall.version>0.0.1</kq.mall.version>
@@ -17,7 +17,6 @@
 
     <dependencies>
 
-        <!-- web环境 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -29,7 +28,14 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
         </dependency>
 
-        <!--Spring Cloud & Alibaba -->
+        <!-- 单元测试 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Spring Cloud & Alibaba -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
@@ -52,17 +58,6 @@
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
 
-        <!-- OAuth2 认证服务器-->
-        <dependency>
-            <groupId>org.springframework.security.oauth.boot</groupId>
-            <artifactId>spring-security-oauth2-autoconfigure</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-oauth2-jose</artifactId>
-        </dependency>
-
         <!-- Sentinel流量控制、熔断降级 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
@@ -74,10 +69,16 @@
             <artifactId>sentinel-datasource-nacos</artifactId>
         </dependency>
 
+        <!-- JWT库 -->
         <dependency>
-            <groupId>com.kangqing</groupId>
-            <artifactId>ums-api</artifactId>
-            <version>${kq.mall.version}</version>
+            <groupId>com.nimbusds</groupId>
+            <artifactId>nimbus-jose-jwt</artifactId>
+        </dependency>
+
+        <!-- 分布式对象存储 -->
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
         </dependency>
 
         <dependency>
@@ -88,43 +89,14 @@
 
         <dependency>
             <groupId>com.kangqing</groupId>
-            <artifactId>common-mybatis</artifactId>
-            <version>${kq.mall.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.kangqing</groupId>
-            <artifactId>common-web</artifactId>
-            <version>${kq.mall.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.kangqing</groupId>
-            <artifactId>common-core</artifactId>
-            <version>${kq.mall.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.kangqing</groupId>
             <artifactId>common-redis</artifactId>
-            <version>${kq.mall.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>com.github.binarywang</groupId>
-            <artifactId>weixin-java-miniapp</artifactId>
+            <groupId>com.kangqing</groupId>
+            <artifactId>common-elasticsearch</artifactId>
         </dependency>
 
-        <!-- Api文档 -->
-        <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-micro-spring-boot-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
     </dependencies>
 
     <build>
@@ -140,7 +112,7 @@
                 <version>1.0.0</version>
                 <executions>
                     <!--执行mvn package,即执行 mvn clean package docker:build-->
-                    <!--<execution>
+                    <!-- <execution>
                          <id>build-image</id>
                          <phase>package</phase>
                          <goals>
@@ -164,9 +136,9 @@
 
                     <entryPoint>["java","-jar","${project.build.finalName}.jar"]</entryPoint>
 
-                    <!-- 指定远程 Docker API地址  TODO yx-->
+                    <!-- 指定远程 Docker API地址  -->
                     <dockerHost>https://yunqing.xyz:2376</dockerHost>
-                    <!-- 指定tls证书的目录 -->
+                    <!-- 指定tls证书的目录 TODO yx-->
                     <dockerCertPath>C:\cert\docker\yunqing.xyz</dockerCertPath>
 
                     <!-- 复制 jar包到docker容器指定目录-->

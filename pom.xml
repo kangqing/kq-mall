@@ -50,6 +50,7 @@
         <module>mall-order</module>
         <module>kq-common</module>
         <module>kq-auth</module>
+        <module>kq-admin</module>
     </modules>
 
     <dependencies>
