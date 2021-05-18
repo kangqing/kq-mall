@@ -23,6 +23,11 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
         <!-- 配置读取 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -165,9 +170,9 @@
                     <entryPoint>["java","-jar","${project.build.finalName}.jar"]</entryPoint>
 
                     <!-- 指定远程 Docker API地址  TODO yx-->
-                    <dockerHost>https://f.youlai.tech:2376</dockerHost>
+                    <dockerHost>https://yunqing.xyz:2376</dockerHost>
                     <!-- 指定tls证书的目录 -->
-                    <dockerCertPath>C:\cert\docker\f.youlai.tech</dockerCertPath>
+                    <dockerCertPath>C:\cert\docker\yunqing.xyz</dockerCertPath>
 
                     <!-- 复制 jar包到docker容器指定目录-->
                     <resources>
