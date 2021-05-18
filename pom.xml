@@ -49,6 +49,7 @@
         <module>mall-shipping</module>
         <module>mall-order</module>
         <module>kq-common</module>
+        <module>kq-auth</module>
     </modules>
 
     <dependencies>
