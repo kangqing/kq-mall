@@ -2,8 +2,8 @@ package com.kangqing.admin.service;
 
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.youlai.admin.pojo.dto.RolePermissionDTO;
-import com.youlai.admin.pojo.entity.SysRolePermission;
+import com.kangqing.admin.pojo.dto.RolePermissionDTO;
+import com.kangqing.admin.pojo.entity.SysRolePermission;
 
 import java.util.List;
 

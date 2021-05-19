@@ -2,7 +2,7 @@ package com.kangqing.admin.service;
 
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.youlai.admin.pojo.entity.SysRole;
+import com.kangqing.admin.pojo.entity.SysRole;
 
 import java.util.List;
 

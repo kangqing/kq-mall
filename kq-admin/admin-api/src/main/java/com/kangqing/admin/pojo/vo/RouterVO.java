@@ -30,7 +30,7 @@ public class RouterVO {
 
     @Data
     @AllArgsConstructor
-    public static class Meta {
+    public class Meta {
         private String title;
         private String icon;
         private List<Integer> roles;

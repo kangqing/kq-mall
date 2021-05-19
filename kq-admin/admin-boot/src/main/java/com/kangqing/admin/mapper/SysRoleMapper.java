@@ -1,7 +1,7 @@
 package com.kangqing.admin.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.youlai.admin.pojo.entity.SysRole;
+import com.kangqing.admin.pojo.entity.SysRole;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

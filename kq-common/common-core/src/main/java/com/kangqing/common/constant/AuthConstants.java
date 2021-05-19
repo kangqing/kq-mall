@@ -104,4 +104,6 @@ public interface AuthConstants {
     String GRANT_TYPE_KEY = "grant_type";
 
     String REFRESH_TOKEN = "refresh_token";
+
+    String WEAPP_CLIENT_ID = "";
 }

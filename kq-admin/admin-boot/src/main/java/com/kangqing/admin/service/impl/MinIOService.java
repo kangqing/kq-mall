@@ -1,7 +1,7 @@
 package com.kangqing.admin.service.impl;
 
 import cn.hutool.core.lang.Assert;
-import com.youlai.admin.config.MinIOProperties;
+import com.kangqing.admin.config.MinIOProperties;
 import io.minio.*;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;

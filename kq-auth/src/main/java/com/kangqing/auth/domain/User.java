@@ -1,6 +1,9 @@
 package com.kangqing.auth.domain;
 
 import cn.hutool.core.collection.CollectionUtil;
+import com.kangqing.admin.pojo.dto.UserDTO;
+import com.kangqing.common.constant.AuthConstants;
+import com.kangqing.mall.ums.pojo.dto.AuthMemberDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;

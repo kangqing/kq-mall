@@ -3,9 +3,9 @@ package com.kangqing.admin.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.youlai.admin.mapper.SysDictItemMapper;
-import com.youlai.admin.pojo.entity.SysDictItem;
-import com.youlai.admin.service.ISysDictItemService;
+import com.kangqing.admin.mapper.SysDictItemMapper;
+import com.kangqing.admin.pojo.entity.SysDictItem;
+import com.kangqing.admin.service.ISysDictItemService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

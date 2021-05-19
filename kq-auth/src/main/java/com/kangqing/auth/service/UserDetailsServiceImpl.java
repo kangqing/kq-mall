@@ -1,10 +1,14 @@
 package com.kangqing.auth.service;
 
+import com.kangqing.admin.api.UserFeignClient;
+import com.kangqing.admin.pojo.dto.UserDTO;
 import com.kangqing.auth.domain.User;
 import com.kangqing.common.constant.AuthConstants;
 import com.kangqing.common.result.Result;
 import com.kangqing.common.result.ResultCode;
 import com.kangqing.common.web.util.RequestUtils;
+import com.kangqing.mall.ums.api.MemberFeignClient;
+import com.kangqing.mall.ums.pojo.dto.AuthMemberDTO;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

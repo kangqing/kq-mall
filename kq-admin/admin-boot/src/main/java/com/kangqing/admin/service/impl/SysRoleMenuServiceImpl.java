@@ -3,9 +3,9 @@ package com.kangqing.admin.service.impl;
 import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.youlai.admin.mapper.SysRoleMenuMapper;
-import com.youlai.admin.pojo.entity.SysRoleMenu;
-import com.youlai.admin.service.ISysRoleMenuService;
+import com.kangqing.admin.mapper.SysRoleMenuMapper;
+import com.kangqing.admin.pojo.entity.SysRoleMenu;
+import com.kangqing.admin.service.ISysRoleMenuService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
     public boolean update(Long roleId, List<Long> menuIds) {
         boolean result = true;
         List<Long> dbMenuIds = this.list(new LambdaQueryWrapper<SysRoleMenu>().eq(SysRoleMenu::getRoleId, roleId))
-                .stream().map(item -> item.getMenuId()).collect(Collectors.toList());
+                .stream().map(SysRoleMenu::getMenuId).collect(Collectors.toList());
 
         // 删除数据库存在此次提交不存在的
         if (CollectionUtil.isNotEmpty(dbMenuIds)) {

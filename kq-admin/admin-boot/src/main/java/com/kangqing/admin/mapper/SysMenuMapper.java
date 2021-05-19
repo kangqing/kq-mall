@@ -1,7 +1,7 @@
 package com.kangqing.admin.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.youlai.admin.pojo.entity.SysMenu;
+import com.kangqing.admin.pojo.entity.SysMenu;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;

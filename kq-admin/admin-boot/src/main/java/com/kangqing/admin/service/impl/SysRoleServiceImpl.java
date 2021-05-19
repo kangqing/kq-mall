@@ -2,17 +2,18 @@ package com.kangqing.admin.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.youlai.admin.mapper.SysRoleMapper;
-import com.youlai.admin.pojo.entity.SysRole;
-import com.youlai.admin.pojo.entity.SysRoleMenu;
-import com.youlai.admin.pojo.entity.SysRolePermission;
-import com.youlai.admin.pojo.entity.SysUserRole;
-import com.youlai.admin.service.ISysRoleMenuService;
-import com.youlai.admin.service.ISysRolePermissionService;
-import com.youlai.admin.service.ISysRoleService;
-import com.youlai.admin.service.ISysUserRoleService;
-import com.youlai.common.web.exception.BizException;
+import com.kangqing.admin.mapper.SysRoleMapper;
+import com.kangqing.admin.pojo.entity.SysRole;
+import com.kangqing.admin.pojo.entity.SysRoleMenu;
+import com.kangqing.admin.pojo.entity.SysRolePermission;
+import com.kangqing.admin.pojo.entity.SysUserRole;
+import com.kangqing.admin.service.ISysRoleMenuService;
+import com.kangqing.admin.service.ISysRolePermissionService;
+import com.kangqing.admin.service.ISysRoleService;
+import com.kangqing.admin.service.ISysUserRoleService;
+import com.kangqing.common.web.exception.BizException;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,12 +21,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> implements ISysRoleService {
 
-    private ISysRoleMenuService iSysRoleMenuService;
-    private ISysUserRoleService iSysUserRoleService;
-    private ISysRolePermissionService iSysRolePermissionService;
+    private final ISysRoleMenuService iSysRoleMenuService;
+    private final ISysUserRoleService iSysUserRoleService;
+    private final ISysRolePermissionService iSysRolePermissionService;
 
 
     @Override

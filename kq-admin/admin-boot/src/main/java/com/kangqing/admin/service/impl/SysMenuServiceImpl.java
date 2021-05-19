@@ -4,14 +4,14 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.youlai.admin.common.constant.AdminConstants;
-import com.youlai.admin.mapper.SysMenuMapper;
-import com.youlai.admin.pojo.entity.SysMenu;
-import com.youlai.admin.pojo.vo.MenuVO;
-import com.youlai.admin.pojo.vo.RouterVO;
-import com.youlai.admin.pojo.vo.TreeVO;
-import com.youlai.admin.service.ISysMenuService;
-import com.youlai.common.constant.GlobalConstants;
+import com.kangqing.admin.common.constant.AdminConstants;
+import com.kangqing.admin.mapper.SysMenuMapper;
+import com.kangqing.admin.pojo.entity.SysMenu;
+import com.kangqing.admin.pojo.vo.MenuVO;
+import com.kangqing.admin.pojo.vo.RouterVO;
+import com.kangqing.admin.pojo.vo.TreeVO;
+import com.kangqing.admin.service.ISysMenuService;
+import com.kangqing.common.constant.GlobalConstants;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,8 +20,8 @@ import java.util.Optional;
 
 
 /**
- * @Author haoxr
- * @Date 2020-11-06
+ * @author kangqing
+ * @since 2020-11-06
  */
 @Service
 public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> implements ISysMenuService {

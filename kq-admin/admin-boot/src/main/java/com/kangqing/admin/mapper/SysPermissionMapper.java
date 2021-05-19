@@ -2,7 +2,7 @@ package com.kangqing.admin.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.youlai.admin.pojo.entity.SysPermission;
+import com.kangqing.admin.pojo.entity.SysPermission;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;

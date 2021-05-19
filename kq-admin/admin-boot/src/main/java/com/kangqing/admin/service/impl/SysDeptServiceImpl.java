@@ -3,12 +3,12 @@ package com.kangqing.admin.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.youlai.admin.common.constant.AdminConstants;
-import com.youlai.admin.mapper.SysDeptMapper;
-import com.youlai.admin.pojo.entity.SysDept;
-import com.youlai.admin.pojo.vo.DeptVO;
-import com.youlai.admin.pojo.vo.TreeVO;
-import com.youlai.admin.service.ISysDeptService;
+import com.kangqing.admin.common.constant.AdminConstants;
+import com.kangqing.admin.mapper.SysDeptMapper;
+import com.kangqing.admin.pojo.entity.SysDept;
+import com.kangqing.admin.pojo.vo.DeptVO;
+import com.kangqing.admin.pojo.vo.TreeVO;
+import com.kangqing.admin.service.ISysDeptService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

@@ -3,10 +3,10 @@ package com.kangqing.admin.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.youlai.admin.pojo.entity.SysMenu;
-import com.youlai.admin.pojo.vo.MenuVO;
-import com.youlai.admin.pojo.vo.RouterVO;
-import com.youlai.admin.pojo.vo.TreeVO;
+import com.kangqing.admin.pojo.entity.SysMenu;
+import com.kangqing.admin.pojo.vo.MenuVO;
+import com.kangqing.admin.pojo.vo.RouterVO;
+import com.kangqing.admin.pojo.vo.TreeVO;
 
 import java.util.List;
 

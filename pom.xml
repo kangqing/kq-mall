@@ -42,15 +42,10 @@
         <swagger.version>1.6.2</swagger.version>
     </properties>
     <modules>
-        <module>mall-common</module>
-        <module>mall-mbpg</module>
-        <module>mall-auth2</module>
-        <module>mall-gateway</module>
-        <module>mall-shipping</module>
-        <module>mall-order</module>
         <module>kq-common</module>
         <module>kq-auth</module>
         <module>kq-admin</module>
+        <module>kq-ums</module>
     </modules>
 
     <dependencies>

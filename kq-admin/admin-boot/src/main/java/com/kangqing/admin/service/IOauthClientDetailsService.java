@@ -1,7 +1,7 @@
 package com.kangqing.admin.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.youlai.admin.pojo.entity.OauthClientDetails;
+import com.kangqing.admin.pojo.entity.OauthClientDetails;
 
 public interface IOauthClientDetailsService extends IService<OauthClientDetails> {
 }

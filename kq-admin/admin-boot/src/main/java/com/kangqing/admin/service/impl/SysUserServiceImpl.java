@@ -5,13 +5,14 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.youlai.admin.mapper.SysUserMapper;
-import com.youlai.admin.pojo.entity.SysUser;
-import com.youlai.admin.pojo.entity.SysUserRole;
-import com.youlai.admin.service.ISysUserRoleService;
-import com.youlai.admin.service.ISysUserService;
-import com.youlai.common.constant.GlobalConstants;
+import com.kangqing.admin.mapper.SysUserMapper;
+import com.kangqing.admin.pojo.entity.SysUser;
+import com.kangqing.admin.pojo.entity.SysUserRole;
+import com.kangqing.admin.service.ISysUserRoleService;
+import com.kangqing.admin.service.ISysUserService;
+import com.kangqing.common.constant.GlobalConstants;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements ISysUserService {
 
 

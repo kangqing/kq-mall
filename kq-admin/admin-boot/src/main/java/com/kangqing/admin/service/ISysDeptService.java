@@ -3,9 +3,9 @@ package com.kangqing.admin.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.youlai.admin.pojo.entity.SysDept;
-import com.youlai.admin.pojo.vo.DeptVO;
-import com.youlai.admin.pojo.vo.TreeVO;
+import com.kangqing.admin.pojo.entity.SysDept;
+import com.kangqing.admin.pojo.vo.DeptVO;
+import com.kangqing.admin.pojo.vo.TreeVO;
 
 import java.util.List;
 

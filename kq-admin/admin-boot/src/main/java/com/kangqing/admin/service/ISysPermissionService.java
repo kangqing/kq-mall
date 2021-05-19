@@ -3,7 +3,7 @@ package com.kangqing.admin.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.youlai.admin.pojo.entity.SysPermission;
+import com.kangqing.admin.pojo.entity.SysPermission;
 
 import java.util.List;
 
