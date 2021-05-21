@@ -46,6 +46,7 @@
         <module>kq-auth</module>
         <module>kq-admin</module>
         <module>kq-ums</module>
+        <module>kq-gateway</module>
     </modules>
 
     <dependencies>
