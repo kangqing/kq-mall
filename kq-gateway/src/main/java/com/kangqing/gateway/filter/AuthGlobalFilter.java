@@ -7,10 +7,10 @@ import com.kangqing.common.constant.AuthConstants;
 import com.kangqing.common.result.ResultCode;
 import com.kangqing.gateway.util.WebUtils;
 import com.nimbusds.jose.JWSObject;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -28,10 +28,10 @@ import reactor.core.publisher.Mono;
  */
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class AuthGlobalFilter implements GlobalFilter, Ordered {
 
-    @Autowired
-    private RedisTemplate redisTemplate;
+    private final RedisTemplate<String, String> redisTemplate;
 
     // 是否演示环境
     @Value("${demo}")
@@ -39,7 +39,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
 
     @SneakyThrows
     @Override
-    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+    public Mono filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 
         ServerHttpRequest request = exchange.getRequest();
         ServerHttpResponse response = exchange.getResponse();

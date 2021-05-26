@@ -3,8 +3,10 @@ package com.kangqing.gateway.security;
 import cn.hutool.core.convert.Convert;
 import com.kangqing.common.constant.AuthConstants;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.authorization.AuthorizationDecision;
@@ -26,11 +28,11 @@ import java.util.Set;
  * 鉴权管理器
  */
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class AuthorizationManager implements ReactiveAuthorizationManager<AuthorizationContext> {
 
-    private RedisTemplate redisTemplate;
+    private final StringRedisTemplate redisTemplate;
 
     @Override
     public Mono<AuthorizationDecision> check(Mono<Authentication> mono, AuthorizationContext authorizationContext) {
