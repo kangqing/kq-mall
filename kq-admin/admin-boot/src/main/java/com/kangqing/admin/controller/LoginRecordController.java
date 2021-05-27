@@ -1,6 +1,12 @@
 package com.kangqing.admin.controller;
 
 import cn.hutool.core.util.StrUtil;
+import com.kangqing.admin.common.constant.ESConstants;
+import com.kangqing.admin.pojo.domain.LoginRecord;
+import com.kangqing.admin.service.ITokenService;
+import com.kangqing.common.base.BaseDocument;
+import com.kangqing.common.elasticsearch.service.ElasticSearchService;
+import com.kangqing.common.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -17,8 +23,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * @author hxr
- * @date 2021-03-09
+ * @author kangqing
+ * @since 2021-03-09
  */
 @Api(tags = "登录记录")
 @RestController

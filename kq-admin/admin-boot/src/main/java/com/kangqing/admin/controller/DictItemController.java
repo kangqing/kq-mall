@@ -5,6 +5,11 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.kangqing.admin.pojo.entity.SysDictItem;
+import com.kangqing.admin.service.ISysDictItemService;
+import com.kangqing.common.enums.QueryModeEnum;
+import com.kangqing.common.result.Result;
+import com.kangqing.common.result.ResultCode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -86,7 +91,7 @@ public class DictItemController {
     public Result update(
             @PathVariable Long id,
             @RequestBody SysDictItem dictItem) {
-        dictItem.setGmtModified(new Date());
+        dictItem.setUpdateTime(new Date());
         boolean status = iSysDictItemService.updateById(dictItem);
         return Result.judge(status);
     }

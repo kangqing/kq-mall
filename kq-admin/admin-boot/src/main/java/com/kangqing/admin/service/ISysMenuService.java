@@ -11,8 +11,8 @@ import com.kangqing.admin.pojo.vo.TreeVO;
 import java.util.List;
 
 /**
- * @author haoxr
- * @date 2020-11-06
+ * @author kangqing
+ * @since 2020-11-06
  */
 public interface ISysMenuService extends IService<SysMenu> {
 

@@ -3,6 +3,11 @@ package com.kangqing.admin.controller;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.kangqing.admin.pojo.entity.SysMenu;
+import com.kangqing.admin.service.ISysMenuService;
+import com.kangqing.admin.service.ISysRoleMenuService;
+import com.kangqing.common.enums.QueryModeEnum;
+import com.kangqing.common.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -15,8 +20,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * @author haoxr
- * @date 2020-11-06
+ * @author kanqing
+ * @since 2020-11-06
  */
 @Api(tags = "菜单接口")
 @RestController
@@ -41,8 +46,8 @@ public class MenuController {
 
         LambdaQueryWrapper<SysMenu> baseQuery = new LambdaQueryWrapper<SysMenu>()
                 .orderByAsc(SysMenu::getSort)
-                .orderByDesc(SysMenu::getGmtModified)
-                .orderByDesc(SysMenu::getGmtCreate);
+                .orderByDesc(SysMenu::getUpdateTime)
+                .orderByDesc(SysMenu::getCreateTime);
         List list;
         switch (queryModeEnum) {
             case LIST:

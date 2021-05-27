@@ -5,6 +5,8 @@ import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.alibaba.csp.sentinel.slots.block.degrade.DegradeException;
 import com.alibaba.csp.sentinel.slots.block.flow.FlowException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kangqing.common.result.Result;
+import com.kangqing.common.result.ResultCode;
 import jodd.net.HttpStatus;
 import org.springframework.stereotype.Component;
 
@@ -12,9 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author haoxr
- * @description 自定义流控异常
- * @createTime 2021/4/12 22:57
+ * @author kangqing
+ * 自定义流控异常
+ * @since 2021/4/12 22:57
  */
 @Component
 public class DefaultBlockExceptionHandler implements BlockExceptionHandler {

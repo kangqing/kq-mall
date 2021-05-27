@@ -1,12 +1,15 @@
 package com.kangqing.admin.handler;
 
 import com.alibaba.csp.sentinel.slots.block.BlockException;
+import com.kangqing.admin.pojo.vo.UserVO;
+import com.kangqing.common.result.Result;
 import lombok.extern.slf4j.Slf4j;
 
 /**
  * 用户接口降级逻辑
- * @author haoxr
- * @createTime 2021/4/23 23:30
+ *
+ * @author kangqing
+ * @since 2021/4/23 23:30
  */
 @Slf4j
 public class UserBlockHandler {

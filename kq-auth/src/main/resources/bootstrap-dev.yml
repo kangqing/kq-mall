@@ -13,6 +13,7 @@ spring:
         server-addr: ${spring.cloud.nacos.discovery.server-addr}
         file-extension: yaml
         group: DEFAULT_GROUP
+        namespace: 87d915fc-e1be-4d0e-8dbd-d3314ac47844
     sentinel:
       enabled: true
       eager: true # 取消控制台懒加载，项目启动即连接Sentinel

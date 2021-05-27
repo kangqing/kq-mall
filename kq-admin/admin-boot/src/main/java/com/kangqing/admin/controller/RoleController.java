@@ -4,6 +4,16 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.kangqing.admin.pojo.dto.RolePermissionDTO;
+import com.kangqing.admin.pojo.entity.SysRole;
+import com.kangqing.admin.service.ISysPermissionService;
+import com.kangqing.admin.service.ISysRoleMenuService;
+import com.kangqing.admin.service.ISysRolePermissionService;
+import com.kangqing.admin.service.ISysRoleService;
+import com.kangqing.common.constant.GlobalConstants;
+import com.kangqing.common.enums.QueryModeEnum;
+import com.kangqing.common.result.Result;
+import com.kangqing.common.result.ResultCode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -51,8 +61,8 @@ public class RoleController {
                 LambdaQueryWrapper<SysRole> queryWrapper = new LambdaQueryWrapper<SysRole>()
                         .like(StrUtil.isNotBlank(name), SysRole::getName, name)
                         .orderByAsc(SysRole::getSort)
-                        .orderByDesc(SysRole::getGmtModified)
-                        .orderByDesc(SysRole::getGmtCreate);
+                        .orderByDesc(SysRole::getUpdateTime)
+                        .orderByDesc(SysRole::getCreateTime);
                 Page<SysRole> result = iSysRoleService.page(new Page<>(page, limit), queryWrapper);
                 return Result.success(result.getRecords(), result.getTotal());
             case LIST:
