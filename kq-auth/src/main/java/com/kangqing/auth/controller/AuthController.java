@@ -58,10 +58,9 @@ public class AuthController {
             @ApiImplicitParam(name = "iv", value = "加密算法的初始向量"),
     })
     @PostMapping("/token")
-    public OAuth2AccessToken postAccessToken(
-            @ApiIgnore Principal principal,
-            @ApiIgnore @RequestParam Map<String, String> parameters
-    ) throws HttpRequestMethodNotSupportedException {
+    public OAuth2AccessToken postAccessToken(@ApiIgnore Principal principal,
+                                             @ApiIgnore @RequestParam Map<String, String> parameters)
+            throws HttpRequestMethodNotSupportedException {
         OAuth2AccessToken oAuth2AccessToken;
 
         /**

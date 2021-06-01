@@ -24,7 +24,7 @@ public class UserBlockHandler {
     }
 
 
-    public static  Result handleGetUserByUsernameBlock(String username,BlockException blockException){
+    public static  Result<?> handleGetUserByUsernameBlock(String username, BlockException blockException){
         log.info("降级了：{}",username);
         return Result.failed("降级 了");
     }

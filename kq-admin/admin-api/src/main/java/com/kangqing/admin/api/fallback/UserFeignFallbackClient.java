@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
+ * 实现UserFeignClient，对其中声明的接口进行熔断降级处理
  * @author kangqing
  * @since 2021/5/18
  */

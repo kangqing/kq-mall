@@ -55,7 +55,7 @@ public class UserController extends BaseController {
             @ApiImplicitParam(name = "deptId", value = "部门ID", paramType = "query", dataType = "Long"),
     })
     @GetMapping
-    public Result list(
+    public Result<?> list(
             Integer page,
             Integer limit,
             String nickname,
@@ -77,7 +77,7 @@ public class UserController extends BaseController {
     @ApiOperation(value = "用户详情")
     @ApiImplicitParam(name = "id", value = "用户ID", required = true, paramType = "path", dataType = "Long")
     @GetMapping("/{id}")
-    public Result detail(
+    public Result<?> detail(
             @PathVariable Long id
     ) {
         SysUser user = iSysUserService.getById(id);
@@ -94,7 +94,7 @@ public class UserController extends BaseController {
     @ApiOperation(value = "新增用户")
     @ApiImplicitParam(name = "user", value = "实体JSON对象", required = true, paramType = "body", dataType = "SysUser")
     @PostMapping
-    public Result add(@RequestBody SysUser user) {
+    public Result<?> add(@RequestBody SysUser user) {
         boolean result = iSysUserService.saveUser(user);
         return Result.judge(result);
     }
@@ -105,9 +105,7 @@ public class UserController extends BaseController {
             @ApiImplicitParam(name = "user", value = "实体JSON对象", required = true, paramType = "body", dataType = "SysUser")
     })
     @PutMapping(value = "/{id}")
-    public Result update(
-            @PathVariable Integer id,
-            @RequestBody SysUser user) {
+    public Result<?> update(@PathVariable Integer id, @RequestBody SysUser user) {
         boolean result = iSysUserService.updateUser(user);
         return Result.judge(result);
     }
@@ -115,8 +113,9 @@ public class UserController extends BaseController {
     @ApiOperation(value = "删除用户")
     @ApiImplicitParam(name = "ids", value = "id集合", required = true, paramType = "query", dataType = "String")
     @DeleteMapping("/{ids}")
-    public Result delete(@PathVariable String ids) {
-        boolean status = iSysUserService.removeByIds(Arrays.asList(ids.split(",")).stream().map(id -> Long.parseLong(id)).collect(Collectors.toList()));
+    public Result<?> delete(@PathVariable String ids) {
+        boolean status = iSysUserService.removeByIds(Arrays.stream(ids.split(","))
+                .map(Long::parseLong).collect(Collectors.toList()));
         return Result.judge(status);
     }
 
@@ -126,7 +125,7 @@ public class UserController extends BaseController {
             @ApiImplicitParam(name = "user", value = "实体JSON对象", required = true, paramType = "body", dataType = "SysUser")
     })
     @PatchMapping(value = "/{id}")
-    public Result patch(@PathVariable Long id, @RequestBody SysUser user) {
+    public Result<?> patch(@PathVariable Long id, @RequestBody SysUser user) {
         LambdaUpdateWrapper<SysUser> updateWrapper = new LambdaUpdateWrapper<SysUser>().eq(SysUser::getId, id);
         updateWrapper.set(user.getStatus() != null, SysUser::getStatus, user.getStatus());
         updateWrapper.set(user.getPassword() != null, SysUser::getPassword, passwordEncoder.encode(user.getPassword()));
@@ -138,13 +137,13 @@ public class UserController extends BaseController {
     /**
      * 提供用于用户登录认证需要的用户信息
      *
-     * @param username
+     * @param username 用户名
      * @return
      */
     @ApiOperation(value = "根据用户名获取用户信息")
     @ApiImplicitParam(name = "username", value = "用户名", required = true, paramType = "path", dataType = "String")
     @GetMapping("/username/{username}")
-    public Result getUserByUsername(@PathVariable String username) {
+    public Result<?> getUserByUsername(@PathVariable String username) {
         SysUser user = iSysUserService.getOne(new LambdaQueryWrapper<SysUser>()
                 .eq(SysUser::getUsername, username));
 
@@ -160,7 +159,7 @@ public class UserController extends BaseController {
         // 获取用户的角色ID集合
         List<Long> roleIds = iSysUserRoleService.list(new LambdaQueryWrapper<SysUserRole>()
                 .eq(SysUserRole::getUserId, user.getId())
-        ).stream().map(item -> item.getRoleId()).collect(Collectors.toList());
+        ).stream().map(SysUserRole::getRoleId).collect(Collectors.toList());
         userDTO.setRoleIds(roleIds);
 
         return Result.success(userDTO);
