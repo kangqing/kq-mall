@@ -31,7 +31,7 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class AuthGlobalFilter implements GlobalFilter, Ordered {
 
-    private final RedisTemplate<String, String> redisTemplate;
+    private final RedisTemplate redisTemplate;
 
     // 是否演示环境
     @Value("${demo}")

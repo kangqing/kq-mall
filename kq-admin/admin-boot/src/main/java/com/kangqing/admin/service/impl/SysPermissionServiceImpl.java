@@ -11,7 +11,6 @@ import com.kangqing.common.constant.AuthConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -22,7 +21,7 @@ import java.util.stream.Collectors;
 public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, SysPermission> implements ISysPermissionService {
 
 
-    private final StringRedisTemplate redisTemplate;
+    private final RedisTemplate redisTemplate;
 
     @Override
     public List<SysPermission> listPermissionRoles() {
