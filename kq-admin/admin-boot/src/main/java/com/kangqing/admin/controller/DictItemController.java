@@ -15,6 +15,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,10 +27,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/api.admin/v1/dict_items")
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class DictItemController {
 
-    private ISysDictItemService iSysDictItemService;
+    private final ISysDictItemService iSysDictItemService;
 
     @ApiOperation(value = "列表分页")
     @ApiImplicitParams({
@@ -40,7 +41,7 @@ public class DictItemController {
             @ApiImplicitParam(name = "dictCode", value = "字典编码", paramType = "query", dataType = "String")
     })
     @GetMapping
-    public Result list(
+    public Result<?> list(
             String queryMode,
             Integer page,
             Integer limit,
@@ -69,7 +70,7 @@ public class DictItemController {
     @ApiOperation(value = "字典项详情")
     @ApiImplicitParam(name = "id", value = "字典id", required = true, paramType = "path", dataType = "Long")
     @GetMapping("/{id}")
-    public Result detail(@PathVariable Integer id) {
+    public Result<?> detail(@PathVariable Integer id) {
         SysDictItem dictItem = iSysDictItemService.getById(id);
         return Result.success(dictItem);
     }
@@ -77,7 +78,7 @@ public class DictItemController {
     @ApiOperation(value = "新增字典项")
     @ApiImplicitParam(name = "dictItem", value = "实体JSON对象", required = true, paramType = "body", dataType = "SysDictItem")
     @PostMapping
-    public Result add(@RequestBody SysDictItem dictItem) {
+    public Result<?> add(@RequestBody SysDictItem dictItem) {
         boolean status = iSysDictItemService.save(dictItem);
         return Result.judge(status);
     }
@@ -88,7 +89,7 @@ public class DictItemController {
             @ApiImplicitParam(name = "dictItem", value = "实体JSON对象", required = true, paramType = "body", dataType = "SysDictItem")
     })
     @PutMapping(value = "/{id}")
-    public Result update(
+    public Result<?> update(
             @PathVariable Long id,
             @RequestBody SysDictItem dictItem) {
         dictItem.setUpdateTime(new Date());
@@ -99,7 +100,7 @@ public class DictItemController {
     @ApiOperation(value = "删除字典数据")
     @ApiImplicitParam(name = "ids", value = "主键ID集合，以,分割拼接字符串", required = true, paramType = "query", dataType = "String")
     @DeleteMapping("/{ids}")
-    public Result delete(@PathVariable String ids) {
+    public Result<?> delete(@PathVariable String ids) {
         boolean status = iSysDictItemService.removeByIds(Arrays.asList(ids.split(",")));
         return Result.judge(status);
     }
@@ -111,7 +112,7 @@ public class DictItemController {
             @ApiImplicitParam(name = "dictItem", value = "实体JSON对象", required = true, paramType = "body", dataType = "SysDictItem")
     })
     @PatchMapping(value = "/{id}")
-    public Result patch(@PathVariable Integer id, @RequestBody SysDictItem dictItem) {
+    public Result<?> patch(@PathVariable Integer id, @RequestBody SysDictItem dictItem) {
         LambdaUpdateWrapper<SysDictItem> updateWrapper = new LambdaUpdateWrapper<SysDictItem>().eq(SysDictItem::getId, id);
         updateWrapper.set(dictItem.getStatus() != null, SysDictItem::getStatus, dictItem.getStatus());
         boolean status = iSysDictItemService.update(updateWrapper);

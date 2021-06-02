@@ -46,7 +46,7 @@ public class LoginRecordController {
             @ApiImplicitParam(name = "clientIP", value = "客户端IP", paramType = "query", dataType = "String")
     })
     @GetMapping
-    public Result list(
+    public Result<?> list(
             Integer page,
             Integer limit,
             String startDate,
@@ -95,7 +95,7 @@ public class LoginRecordController {
     @ApiOperation(value = "删除登录记录")
     @ApiImplicitParam(name = "ids", value = "id集合", required = true, paramType = "query", dataType = "String")
     @DeleteMapping
-    public Result delete(@RequestBody List<BaseDocument> documents) {
+    public Result<?> delete(@RequestBody List<BaseDocument> documents) {
         documents.forEach(document -> elasticSearchService.deleteById(document.getId(), document.getIndex()));
         return Result.success();
     }

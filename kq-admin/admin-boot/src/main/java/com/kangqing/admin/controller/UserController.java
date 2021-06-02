@@ -24,6 +24,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +37,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api.admin/v1/users")
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserController extends BaseController {
 
     private final ISysUserService iSysUserService;

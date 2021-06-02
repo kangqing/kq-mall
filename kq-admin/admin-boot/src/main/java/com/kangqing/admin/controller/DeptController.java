@@ -14,6 +14,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +30,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @RestController
 @RequestMapping("/api.admin/v1/depts")
 @Slf4j
+@RequiredArgsConstructor
 public class DeptController {
 
-    @Autowired
-    private ISysDeptService iSysDeptService;
+    private final ISysDeptService iSysDeptService;
 
     @ApiOperation(value = "列表分页")
     @ApiImplicitParams({
@@ -42,7 +43,7 @@ public class DeptController {
 
     })
     @GetMapping
-    public Result list(String queryMode,
+    public Result<?> list(String queryMode,
                        Integer status,
                        String name) {
 
@@ -70,7 +71,7 @@ public class DeptController {
     @ApiOperation(value = "部门详情")
     @ApiImplicitParam(name = "id", value = "部门id", required = true, paramType = "path", dataType = "Long")
     @GetMapping("/{id}")
-    public Result detail(@PathVariable Integer id) {
+    public Result<?> detail(@PathVariable Integer id) {
         SysDept sysDept = iSysDeptService.getById(id);
         return Result.success(sysDept);
     }
@@ -78,7 +79,7 @@ public class DeptController {
     @ApiOperation(value = "新增部门")
     @ApiImplicitParam(name = "sysDept", value = "实体JSON对象", required = true, paramType = "body", dataType = "SysDept")
     @PostMapping
-    public Result add(@RequestBody SysDept sysDept) {
+    public Result<?> add(@RequestBody SysDept sysDept) {
         String treePath = getDeptTreePath(sysDept);
         sysDept.setTreePath(treePath);
         boolean status = iSysDeptService.save(sysDept);
@@ -91,7 +92,7 @@ public class DeptController {
             @ApiImplicitParam(name = "sysDept", value = "实体JSON对象", required = true, paramType = "body", dataType = "SysDept")
     })
     @PutMapping(value = "/{id}")
-    public Result update(
+    public Result<?> update(
             @PathVariable Integer id,
             @RequestBody SysDept sysDept) {
 
@@ -104,11 +105,11 @@ public class DeptController {
     @ApiOperation(value = "删除部门")
     @ApiImplicitParam(name = "ids", value = "id集合", required = true, paramType = "query", dataType = "String")
     @DeleteMapping("/{ids}")
-    public Result delete(@PathVariable("ids") String ids) {
+    public Result<?> delete(@PathVariable("ids") String ids) {
         AtomicBoolean result = new AtomicBoolean(true);
         List<String> idList = Arrays.asList(ids.split(","));
         // 删除部门以及子部门
-        Optional.ofNullable(idList).orElse(new ArrayList<>()).forEach(id ->
+        Optional.of(idList).orElse(new ArrayList<>()).forEach(id ->
                 result.set(iSysDeptService.remove(new LambdaQueryWrapper<SysDept>().eq(SysDept::getId, id)
                         .or().apply("concat (',',tree_path,',') like concat('%,',{0},',%')", id)))
         );

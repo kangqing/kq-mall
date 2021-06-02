@@ -121,7 +121,7 @@ public class AuthController {
                     .setPassword(passwordEncoder.encode(openid).replace(AuthConstants.BCRYPT, Strings.EMPTY)) // 加密密码移除前缀加密方式 {bcrypt}
                     .setStatus(GlobalConstants.STATUS_NORMAL_VALUE);
 
-            Result res = memberFeignClient.add(user);
+            Result<?> res = memberFeignClient.add(user);
             if (!ResultCode.SUCCESS.getCode().equals(res.getCode())) {
                 throw new BizException("注册会员失败");
             }

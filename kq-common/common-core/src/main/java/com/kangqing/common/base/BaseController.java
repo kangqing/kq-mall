@@ -6,5 +6,5 @@ package com.kangqing.common.base;
  * @author kangqing
  * @since 2021/5/11 22:48
  */
-public class BaseController<T> {
+public class BaseController {
 }

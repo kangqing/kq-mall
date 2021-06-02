@@ -3,6 +3,7 @@ package com.kangqing.admin.service.impl;
 import cn.hutool.core.lang.Assert;
 import com.kangqing.admin.config.MinIOProperties;
 import io.minio.*;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
@@ -14,14 +15,11 @@ import java.io.InputStream;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 @EnableConfigurationProperties({MinIOProperties.class})
 public class MinIOService implements InitializingBean {
 
-    private MinIOProperties minIOProperties;
-
-    public MinIOService(MinIOProperties minIOProperties){
-        this.minIOProperties=minIOProperties;
-    }
+    private final MinIOProperties minIOProperties;
 
     private MinioClient client;
 

@@ -9,6 +9,7 @@ import com.kangqing.common.web.util.RequestUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -36,14 +37,14 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api.admin/v1/dashboard")
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class DashboardController {
 
     ElasticSearchService elasticSearchService;
 
     @ApiOperation(value = "控制台数据")
     @GetMapping
-    public Result data() {
+    public Result<?> data() {
         Map<String, Object> data = new HashMap<>();
 
         // 今日IP数
@@ -56,7 +57,7 @@ public class DashboardController {
 
         // 登录统计
         int days = 10; // 统计天数
-        Map loginCount = getLoginCount(days);
+        Map<String, Object> loginCount = getLoginCount(days);
         data.put("loginCount", loginCount);
 
         return Result.success(data);
@@ -76,7 +77,7 @@ public class DashboardController {
         return totalIpCount;
     }
 
-    private Map getLoginCount(int days) {
+    private Map<String, Object> getLoginCount(int days) {
 
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");

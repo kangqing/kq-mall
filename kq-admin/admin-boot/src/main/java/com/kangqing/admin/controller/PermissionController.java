@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -19,10 +20,10 @@ import java.util.Arrays;
 @Api(tags = "权限接口")
 @RestController
 @RequestMapping("/api.admin/v1/permissions")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class PermissionController {
 
-    private ISysPermissionService iSysPermissionService;
+    private final ISysPermissionService iSysPermissionService;
 
     @ApiOperation(value = "列表分页")
     @ApiImplicitParams({
@@ -35,7 +36,7 @@ public class PermissionController {
             @ApiImplicitParam(name = "moduleId", value = "菜单ID", paramType = "query", dataType = "Long")
     })
     @GetMapping
-    public Result list(
+    public Result<?> list(
             String queryMode,
             Integer page,
             Integer limit,
@@ -66,7 +67,7 @@ public class PermissionController {
     @ApiOperation(value = "权限详情")
     @ApiImplicitParam(name = "id", value = "权限ID", required = true, paramType = "path", dataType = "Long")
     @GetMapping("/{id}")
-    public Result detail(@PathVariable Long id) {
+    public Result<?> detail(@PathVariable Long id) {
         SysPermission permission = iSysPermissionService.getById(id);
         return Result.success(permission);
     }
@@ -74,7 +75,7 @@ public class PermissionController {
     @ApiOperation(value = "新增权限")
     @ApiImplicitParam(name = "permission", value = "实体JSON对象", required = true, paramType = "body", dataType = "SysPermission")
     @PostMapping
-    public Result add(@RequestBody SysPermission permission) {
+    public Result<?> add(@RequestBody SysPermission permission) {
         boolean result = iSysPermissionService.save(permission);
         if (result) {
             iSysPermissionService.refreshPermissionRolesCache();
@@ -88,7 +89,7 @@ public class PermissionController {
             @ApiImplicitParam(name = "permission", value = "实体JSON对象", required = true, paramType = "body", dataType = "SysPermission")
     })
     @PutMapping(value = "/{id}")
-    public Result update(
+    public Result<?> update(
             @PathVariable Long id,
             @RequestBody SysPermission permission) {
         boolean result = iSysPermissionService.updateById(permission);
@@ -101,7 +102,7 @@ public class PermissionController {
     @ApiOperation(value = "删除权限")
     @ApiImplicitParam(name = "ids", value = "id集合", required = true, paramType = "query", dataType = "Long")
     @DeleteMapping("/{ids}")
-    public Result delete(@PathVariable String ids) {
+    public Result<?> delete(@PathVariable String ids) {
         boolean status = iSysPermissionService.removeByIds(Arrays.asList(ids.split(",")));
         return Result.judge(status);
     }

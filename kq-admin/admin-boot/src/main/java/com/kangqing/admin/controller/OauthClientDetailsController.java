@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,10 +22,10 @@ import java.util.Arrays;
 @RestController
 @RequestMapping("/api.admin/v1/clients")
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class OauthClientDetailsController {
 
-    private IOauthClientDetailsService iOauthClientDetailsService;
+    private final IOauthClientDetailsService iOauthClientDetailsService;
 
     @ApiOperation(value = "列表分页")
     @ApiImplicitParams({
@@ -33,7 +34,7 @@ public class OauthClientDetailsController {
             @ApiImplicitParam(name = "clientId", value = "客户端ID", paramType = "query", dataType = "String")
     })
     @GetMapping
-    public Result list(Integer page,
+    public Result<?> list(Integer page,
                        Integer limit,
                        String clientId) {
         IPage<OauthClientDetails> result = iOauthClientDetailsService.page(
@@ -46,7 +47,7 @@ public class OauthClientDetailsController {
     @ApiOperation(value = "客户端详情")
     @ApiImplicitParam(name = "clientId", value = "客户端id", required = true, paramType = "path", dataType = "String")
     @GetMapping("/{clientId}")
-    public Result detail(@PathVariable String clientId) {
+    public Result<?> detail(@PathVariable String clientId) {
         OauthClientDetails client = iOauthClientDetailsService.getById(clientId);
         return Result.success(client);
     }
@@ -54,7 +55,7 @@ public class OauthClientDetailsController {
     @ApiOperation(value = "新增客户端")
     @ApiImplicitParam(name = "client", value = "实体JSON对象", required = true, paramType = "body", dataType = "OauthClientDetails")
     @PostMapping
-    public Result add(@RequestBody OauthClientDetails client) {
+    public Result<?> add(@RequestBody OauthClientDetails client) {
         boolean status = iOauthClientDetailsService.save(client);
         return Result.judge(status);
     }
@@ -65,7 +66,7 @@ public class OauthClientDetailsController {
             @ApiImplicitParam(name = "client", value = "实体JSON对象", required = true, paramType = "body", dataType = "OauthClientDetails")
     })
     @PutMapping(value = "/{clientId}")
-    public Result update(
+    public Result<?> update(
             @PathVariable String clientId,
             @RequestBody OauthClientDetails client) {
         boolean status = iOauthClientDetailsService.updateById(client);
@@ -75,7 +76,7 @@ public class OauthClientDetailsController {
     @ApiOperation(value = "删除客户端")
     @ApiImplicitParam(name = "ids", value = "id集合,以,拼接字符串", required = true, paramType = "query", dataType = "String")
     @DeleteMapping("/{ids}")
-    public Result delete(@PathVariable("ids") String ids) {
+    public Result<?> delete(@PathVariable("ids") String ids) {
         boolean status = iOauthClientDetailsService.removeByIds(Arrays.asList(ids.split(",")));
         return Result.judge(status);
     }

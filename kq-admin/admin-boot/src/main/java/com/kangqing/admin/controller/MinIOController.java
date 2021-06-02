@@ -10,19 +10,22 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Objects;
+
 @Api(tags = "文件接口")
 @RestController
 @RequestMapping("/api.admin/v1/files")
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class MinIOController {
 
-    private MinIOService minIOService;
+    private final MinIOService minIOService;
 
     @PostMapping
     @ApiOperation(value = "文件上传")
@@ -35,7 +38,7 @@ public class MinIOController {
             @RequestParam(value = "bucketName", required = false, defaultValue = "default") String bucketName
     ) {
         try {
-            String suffix = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
+            String suffix = Objects.requireNonNull(file.getOriginalFilename()).substring(file.getOriginalFilename().lastIndexOf(".") + 1);
             String objectName = IdUtil.simpleUUID() + "." + suffix;
             String path = minIOService.putObject(bucketName, objectName, file.getInputStream());
             return Result.success(path);
@@ -50,7 +53,7 @@ public class MinIOController {
             @ApiImplicitParam(name = "path", value = "文件路径", required = true, paramType = "query"),
     })
     @SneakyThrows
-    public Result removeFile(@RequestParam String path) {
+    public Result<?> removeFile(@RequestParam String path) {
         int lastIndex = path.lastIndexOf("/");
         String bucketName = path.substring(path.lastIndexOf("/", lastIndex - 1) + 1, lastIndex);
         String objectName = path.substring(lastIndex + 1);

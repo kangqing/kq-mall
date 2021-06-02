@@ -6,8 +6,10 @@ import com.kangqing.admin.service.ITokenService;
 import com.kangqing.common.constant.AuthConstants;
 import com.kangqing.common.domain.JWTPayload;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;
@@ -17,11 +19,11 @@ import java.util.concurrent.TimeUnit;
  * @since 2021-03-10
  */
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class TokenServiceImpl implements ITokenService {
 
 
-    RedisTemplate redisTemplate;
+    StringRedisTemplate redisTemplate;
 
     @Override
     @SneakyThrows

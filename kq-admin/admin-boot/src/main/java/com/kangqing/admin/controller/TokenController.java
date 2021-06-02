@@ -32,7 +32,7 @@ public class TokenController {
     @ApiImplicitParam(name = "token", value = "访问令牌", required = true, paramType = "query", dataType = "String")
     @PostMapping("/{token}/_invalidate")
     @SneakyThrows
-    public Result invalidateToken(@PathVariable String token) {
+    public Result<?> invalidateToken(@PathVariable String token) {
         boolean status = tokenService.invalidateToken(token);
         return Result.judge(status);
     }
