@@ -45,8 +45,11 @@
         <module>kq-common</module>
         <module>kq-auth</module>
         <module>kq-admin</module>
-        <module>kq-ums</module>
+        <module>mall-ums</module>
         <module>kq-gateway</module>
+        <module>mall-sms</module>
+        <module>mall-pms</module>
+        <module>mall-oms</module>
     </modules>
 
     <dependencies>

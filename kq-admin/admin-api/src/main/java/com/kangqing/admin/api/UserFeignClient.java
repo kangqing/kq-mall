@@ -15,4 +15,7 @@ public interface UserFeignClient {
 
     @GetMapping("/api.admin/v1/users/username/{username}")
     Result<UserDTO> getUserByUsername(@PathVariable String username);
+
+    @GetMapping("/api.admin/v1/users/me")
+    Result<?> getCurrentUser();
 }

@@ -1,0 +1,15 @@
+server:
+  port: 8603
+
+spring:
+  application:
+    name: mall-oms
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://localhost:8848
+      config:
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        file-extension: yaml
+        namespace: 87d915fc-e1be-4d0e-8dbd-d3314ac47844
+
